@@ -5,7 +5,7 @@ CS Operations System Design - Signal-based customer  health segmentation model f
 
 ## Overview
 Designed a signal-based customer health segmentation system 
-for a PropTech scale-up with 850 customers and a 2-person 
+for a fictitious scale-up with 850 customers and a 2-person 
 CS team. The solution enables proactive customer success 
 operations without requiring a traditional 0-100 health score.
 
@@ -14,7 +14,7 @@ operations without requiring a traditional 0-100 health score.
 - 2-person CS team operating reactively (only Day 1/Day 30 calls)
 - No systematic way to identify churn risk, expansion 
   opportunities, or onboarding issues
-- Data sources: HubSpot (CRM), Mixpanel (product analytics), 
+- Data sources: HubSpot (CRM), Matomo (product analytics), 
   Stripe (billing)
 - No data warehouse (building one) - manual data joins required
 
@@ -68,11 +68,11 @@ WHO to contact and WHY:
 ### Data Sources
 - **HubSpot (CRM):** Contract dates, support tickets, MRR
 - **Stripe (Billing):** Payment status (via native integration)
-- **Mixpanel (Product Analytics):** Login data, feature usage 
+- **Matomo (Product Analytics):** Login data, feature usage 
   (synced via weekly CSV import)
 
 ### Data Flow
-1. Mixpanel → Weekly CSV export → Import to HubSpot
+1. matomo → Weekly CSV export → Import to HubSpot
 2. HubSpot calculates derived fields (days since login, 
    days to renewal, usage level)
 3. Segment assignment runs daily at 9am
@@ -104,7 +104,7 @@ See `sql_examples.sql` for implementation of segment logic.
 ## Design Rationale
 
 **Why segments instead of numeric score?**
-- Works with incomplete data (resilient to Mixpanel gaps)
+- Works with incomplete data (resilient to matomo gaps)
 - Immediately actionable (CS knows exactly what to do)
 - No arbitrary weight justification needed
 - Easier for 2-person team to adopt
@@ -116,24 +116,12 @@ follow-up date. Small customer base (850) makes duplicate
 tasks manageable; risk of missing churn > risk of 
 duplication.
 
-## Quick Win (First 30 Days)
 
-**Priority:** Build "Revenue at Risk" segment (HubSpot-only)
-
-**Why:**
-- Highest revenue impact
-- Uses existing HubSpot data (no Mixpanel dependency)
-- Implementable in Week 1
-- Proves value immediately
-
-**v1.0 Criteria:**
-- Days to renewal ≤ 60 AND
-- (Payment failed OR Support tickets ≥ 3)
 
 ## Tools & Technologies
 - **SQL** (PostgreSQL) - Data querying and segment logic
 - **HubSpot** - CRM, workflow automation, task management
-- **Mixpanel** - Product analytics (data source)
+- **Matomo** - Product analytics (data source)
 - **Stripe** - Payment data (via HubSpot integration)
 - **Power BI** - Segment performance dashboards (mentioned)
 
@@ -152,6 +140,5 @@ duplication.
 
 ---
 
-**Note:** This was a case study project. Company and specific 
-data have been anonymized. The approach and technical design 
+**Note:** The approach and technical design 
 are applicable to any B2B SaaS customer success operation.
