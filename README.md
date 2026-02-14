@@ -5,7 +5,7 @@ CS Operations System Design - Signal-based customer  health segmentation model f
 
 ## Overview
 Designed a signal-based customer health segmentation system 
-for a fictitious scale-up with 850 customers and a 2-person 
+for a  scale-up with 850 customers and a 2-person 
 CS team. The solution enables proactive customer success 
 operations without requiring a traditional 0-100 health score.
 
